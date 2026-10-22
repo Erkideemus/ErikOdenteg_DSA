@@ -21,7 +21,7 @@ namespace DSA.Lab01
                     descending = false;
                     i = savedNum;
                 }
-                else if (i > 0)
+                else
                 {
                     if (values[i] < values[i - 1])
                     {
@@ -30,15 +30,22 @@ namespace DSA.Lab01
                         values[i - 1] = val;
                         if (!descending)
                         {
-                            savedNum = i + 1;
+                            savedNum = i;
                             descending = true;
                         }
                         i--;
                     }
-                    else if (values[i] > values[i - 1])
+                    else if (values[i] >= values[i - 1])
                     {
-                        i = savedNum;
-                        descending = false;
+                        if (descending == true)
+                        {
+                            i = savedNum;
+                            descending = false;
+                        }
+                        else
+                        {
+                            i++;
+                        }
                     }
                 }
             }
