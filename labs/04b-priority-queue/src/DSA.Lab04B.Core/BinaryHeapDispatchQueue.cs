@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace DSA.Lab04B
 {
@@ -19,10 +20,14 @@ namespace DSA.Lab04B
 
         public void Enqueue(T item, int priority)
         {
-            // TODO:
-            // 1. Append the new entry at the end.
-            // 2. Restore the heap invariant upward.
-            throw new NotImplementedException();
+            if (item == null) { throw new ArgumentNullException("item"); }
+            PriorityEntry<T> entry = new PriorityEntry<T>(item, priority);
+            _heap.Add(entry);
+
+            for (int i = _heap.Count-1; i > 0; i--)
+            {
+                SiftUp(i);
+            }
         }
 
         public PriorityEntry<T> PeekNext()
@@ -37,27 +42,44 @@ namespace DSA.Lab04B
 
         public PriorityEntry<T> DequeueNext()
         {
+            if (_heap.Count <= 0)
+            {
+                throw new InvalidOperationException("Heap is empty.");
+            }
+            PriorityEntry<T> entry = _heap[0];
+
+            for (int i = 0; i < _heap.Count; i++)
+            {
+                SiftDown(i);
+            }
+
+            return entry;
             // TODO:
             // 1. Reject an empty queue.
             // 2. Remember the root: that is the minimum.
             // 3. Move the final heap entry to the root and remove the final slot.
             // 4. If anything remains, restore the invariant downward.
             // 5. Return the old root.
-            throw new NotImplementedException();
         }
 
         private void SiftUp(int index)
         {
-            // TODO: compare the entry with its parent and swap while needed.
-            throw new NotImplementedException();
+            if (_heap[index].Priority < _heap[index - 1].Priority)
+            {
+                Swap(index, index - 1);
+            }
         }
 
         private void SiftDown(int index)
         {
-            // TODO:
-            // Compare the current entry with its children.
-            // If a child should come first, swap with the smaller-priority child.
-            throw new NotImplementedException();
+            if (index + 1 >= _heap.Count)
+            {
+                _heap.RemoveAt(index);
+            }
+            else
+            {
+                _heap[index] = _heap[index + 1];
+            }
         }
 
         private static int ParentIndex(int index)

@@ -11,7 +11,7 @@ namespace DSA.Lab04B
             Item = item;
             Priority = priority;
         }
-
+        
         public T Item { get; }
         public int Priority { get; }
     }
